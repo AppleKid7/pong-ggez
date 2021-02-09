@@ -57,7 +57,7 @@ impl Ball {
     }
 }
 
-/*fn draw_rectangle(ctx: &mut ggez::Context, rect: &Rect) -> GameResult {
+fn draw_rectangle(ctx: &mut ggez::Context, rect: &Rect) -> () {
     use ggez::graphics;
     use ggez::graphics::Color;
     let rect_mesh = graphics::Mesh::new_rectangle(
@@ -66,9 +66,10 @@ impl Ball {
         *rect,
         Color::new(1.0, 1.0, 1.0, 1.0),
     )
-    .expect("error creating ball mesh");
+    .expect("error creating mesh");
     graphics::draw(ctx, &rect_mesh, graphics::DrawParam::default())
-}*/
+        .expect("error drawing mesh")
+}
 
 impl EventHandler for MainState {
     fn update(&mut self, ctx: &mut ggez::Context) -> ggez::GameResult {
@@ -121,35 +122,9 @@ impl EventHandler for MainState {
         use ggez::graphics::Color;
         graphics::clear(ctx, Color::new(0.0, 0.0, 0.0, 1.0));
         //all the drawing stuff goes here
-        let ball_mesh = graphics::Mesh::new_rectangle(
-            ctx,
-            graphics::DrawMode::fill(),
-            self.ball.rect,
-            Color::new(1.0, 1.0, 1.0, 1.0),
-        )
-        .expect("error creating ball mesh");
-        graphics::draw(ctx, &ball_mesh, graphics::DrawParam::default())
-            .expect("error drawing ball mesh");
-
-        let l_paddle_mesh = graphics::Mesh::new_rectangle(
-            ctx,
-            graphics::DrawMode::fill(),
-            self.l_paddle,
-            Color::new(1.0, 1.0, 1.0, 1.0),
-        )
-        .expect("error creating ball mesh");
-        graphics::draw(ctx, &l_paddle_mesh, graphics::DrawParam::default())
-            .expect("error drawing ball mesh");
-
-        let r_paddle_mesh = graphics::Mesh::new_rectangle(
-            ctx,
-            graphics::DrawMode::fill(),
-            self.r_paddle,
-            Color::new(1.0, 1.0, 1.0, 1.0),
-        )
-        .expect("error creating ball mesh");
-        graphics::draw(ctx, &r_paddle_mesh, graphics::DrawParam::default())
-            .expect("error drawing ball mesh");
+        draw_rectangle(ctx, &self.ball.rect);
+        draw_rectangle(ctx, &self.r_paddle);
+        draw_rectangle(ctx, &self.l_paddle);
 
         // scoreboard drawing
         let mut scoreboard_text =
